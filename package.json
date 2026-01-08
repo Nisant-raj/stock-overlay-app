@@ -1,0 +1,14 @@
+{
+  "main": "electron/index.js",
+  "scripts": {
+    "frontend": "cd frontend && npm start",
+    "backend": "cd backend && node index.js",
+    "electron": "wait-on http://localhost:4300 && electron .",
+    "start": "concurrently -k \"npm run backend\" \"npm run frontend\" \"npm run electron\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "electron": "^39.2.7",
+    "wait-on": "^9.0.3"
+  }
+}
