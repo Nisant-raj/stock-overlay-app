@@ -1,0 +1,21 @@
+<div class="widget">
+
+  <!-- DRAG AREA -->
+  <div class="drag-bar">
+    <span>📈 Stock Tracker</span>
+
+    <div class="actions">
+      <button (click)="minimize()">—</button>
+      <button (click)="closeApp()">✕</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content" (click)="toggleChart()">
+    {{ stock?.symbol }} - ₹{{ stock?.price }}
+  </div>
+
+  <!-- <app-stock-chart *ngIf="showChart"></app-stock-chart> -->
+
+</div>
+
