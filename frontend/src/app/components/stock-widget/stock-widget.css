@@ -4,6 +4,7 @@
   color: white;
   border-radius: 10px;
   font-family: Arial;
+  padding: 10px;
 }
 
 .drag-bar {
@@ -28,11 +29,6 @@
   -webkit-app-region: no-drag;
 }
 
-.content {
-  padding: 10px;
-  cursor: pointer;
-}
-
 
 .drag-bar {
   -webkit-app-region: drag;
@@ -41,4 +37,25 @@
 
 .actions button {
   -webkit-app-region: no-drag;
+}
+
+.stock-price.up {
+  color: #00ff88;
+}
+
+.stock-price.down {
+  color: #ff4d4d;
+}
+
+
+.stock-price {
+  padding: 4px 9px;
+  background: #e6d9d912;
+  border-radius: 6px;
+}
+
+span {
+  font-size: 10px;
+  font-family: cursive;
+  letter-spacing: 1px;
 }

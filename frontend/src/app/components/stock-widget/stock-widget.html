@@ -4,18 +4,17 @@
   <div class="drag-bar">
     <span>📈 Stock Tracker</span>
 
-    <div class="actions">
+    <!-- <div class="actions">
       <button (click)="minimize()">—</button>
       <button (click)="closeApp()">✕</button>
-    </div>
+    </div> -->
   </div>
 
-  <!-- CONTENT -->
-  <div class="content" (click)="toggleChart()">
-    {{ stock?.symbol }} - ₹{{ stock?.price }}
+  <div class="stock-price" [class]="priceClass">
+    <span>{{ stock?.s ??7 }} - ₹{{ stock?.p??8}}</span>
   </div>
+
 
   <!-- <app-stock-chart *ngIf="showChart"></app-stock-chart> -->
 
 </div>
-

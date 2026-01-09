@@ -1,7 +1,8 @@
-import { Component, HostListener, OnInit,NgZone  } from '@angular/core';
+import { Component, HostListener, OnInit, NgZone } from '@angular/core';
 import { StockService } from '../../services/stock';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
+import { StockSocket } from '../../services/stock-socket'
 
 declare global {
   interface Window {
@@ -14,31 +15,53 @@ declare global {
 
 @Component({
   selector: 'app-stock-widget',
-  imports: [ CommonModule],
+  imports: [CommonModule],
   templateUrl: './stock-widget.html',
   styleUrl: './stock-widget.css',
-  providers: [StockService]
+  providers: [StockService, StockSocket]
 })
 export class StockWidget implements OnInit {
 
   stock: any;
   showChart = true;
 
-  constructor(private stockService: StockService,private zone: NgZone,private cdr: ChangeDetectorRef) { }
+  constructor(private stockService: StockService, private zone: NgZone, private cdr: ChangeDetectorRef, private socketService: StockSocket) { }
 
   ngOnInit() {
-    this.loadStock();
+    // this.loadStock();
     // this.intervalId = setInterval(() => {
     //   if (this.isMarketOpen()) {
     //     this.loadStock();
     //   }
     // }, 5000);
-  //    this.zone.run(() => {
-  //   this.loadStock();
-  // });
-    setInterval(() => this.loadStock(), 5000)
-  }
+    //    this.zone.run(() => {
+    //   this.loadStock();
+    // });
+    // setInterval(() => this.loadStock(), 5000)
 
+    //  this.socketService.connect().subscribe((trade:any) => {
+    //   this.stock = {
+    //     symbol: trade.s,
+    //     price: trade.p,
+    //     time: trade.t
+    //   };
+    // });
+    // }
+
+    this.socketService.connect().subscribe((trade: any) => {
+      if (trade.p > this.previousPrice) {
+        this.priceClass = 'up';
+      } else if (trade.p < this.previousPrice) {
+        this.priceClass = 'down';
+      }
+
+      this.previousPrice = trade.p;
+      this.stock = trade;
+      console.log("this.stock",this.stock)
+    });
+  }
+  previousPrice = 0;
+  priceClass = '';
   loadStock() {
     console.log('Loading stock data...');
     this.stockService.getStock('LSEG.L').subscribe({
@@ -46,13 +69,18 @@ export class StockWidget implements OnInit {
         console.log('Stock data received:', data);
         // this.zone.run(() => {
         this.stock = data;
-      // });
-      this.cdr.detectChanges();
+        // });
+        this.cdr.detectChanges();
       },
       error: (error: any) => {
         console.error('Error loading stock:', error);
       }
     });
+
+
+
+
+
   }
 
   toggleChart() {

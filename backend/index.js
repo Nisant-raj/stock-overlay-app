@@ -1,47 +1,32 @@
 const express = require('express');
 const cors = require('cors');
-const YahooFinance = require('yahoo-finance2').default;
+const WebSocket = require('ws');
 
-const yahooFinance = new YahooFinance(); // 🔥 REQUIRED
+const {
+  startFinnhubStream,
+  subscribe,
+  addClient,
+  removeClient
+} = require('./ws/finhub');
 
 const app = express();
 app.use(cors());
 
-app.get('/api/stock/:symbol', async (req, res) => {
-  try {
-    const symbol = req.params.symbol;
-    const quote = await yahooFinance.quote(symbol);
-
-    res.json({
-      symbol,
-      price: quote.regularMarketPrice,
-      change: quote.regularMarketChangePercent
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.get('/api/stock/:symbol/history', async (req, res) => {
-  try {
-    const symbol = req.params.symbol;
-
-    const result = await yahooFinance.chart(symbol, {
-      period1: '2024-01-01',
-      interval: '1d'
-    });
-
-    const prices = result.quotes.map(q => ({
-      time: q.date.toISOString().split('T')[0],
-      value: q.close
-    }));
-
-    res.json(prices);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
 app.listen(3000, () => {
-  console.log('✅ Backend running on http://localhost:3000');
+  console.log('Backend running on http://localhost:3000');
 });
+
+const wss = new WebSocket.Server({ port: 3001 });
+
+wss.on('connection', (ws) => {
+  console.log('🟢 Angular connected to backend WS');
+
+  addClient(ws);
+  subscribe('BINANCE:BTCUSDT'); // change symbol dynamically later
+
+  ws.on('close', () => {
+    removeClient(ws);
+  });
+});
+FINNHUB_API_KEY="d5g80jhr01qie3lh2a0gd5g80jhr01qie3lh2a10"
+startFinnhubStream(FINNHUB_API_KEY);
