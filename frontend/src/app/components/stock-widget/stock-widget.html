@@ -10,8 +10,12 @@
     </div> -->
   </div>
 
-  <div class="stock-price" [class]="priceClass">
-    <span>{{ stock?.s ??7 }} - ₹{{ stock?.p??8}}</span>
+  <div class="stock-price" [class]="priceClass" *ngFor="let s of symbols">
+    <!-- <span>{{ stock?.s ??7 }} - ₹{{ stock?.p??8}}</span> -->
+    <span class="price-board" style="margin-bottom: 5px;">
+      {{ s }} → {{ prices[s] }}
+    </span>
+
   </div>
 
 

@@ -24,9 +24,15 @@ export class StockWidget implements OnInit {
 
   stock: any;
   showChart = true;
+   symbols = [
+  'BINANCE:BTCUSDT',
+  'BINANCE:ETHUSDT',
+  'BINANCE:DOGEUSDT',
+  'BINANCE:SOLUSDT'
+];
 
   constructor(private stockService: StockService, private zone: NgZone, private cdr: ChangeDetectorRef, private socketService: StockSocket) { }
-
+  prices: Record<string, number> = {};
   ngOnInit() {
     // this.loadStock();
     // this.intervalId = setInterval(() => {
@@ -47,16 +53,17 @@ export class StockWidget implements OnInit {
     //   };
     // });
     // }
-
+    
     this.socketService.connect().subscribe((trade: any) => {
-      if (trade.p > this.previousPrice) {
+      if (trade.price > this.previousPrice) {
         this.priceClass = 'up';
-      } else if (trade.p < this.previousPrice) {
+      } else if (trade.price < this.previousPrice) {
         this.priceClass = 'down';
       }
 
-      this.previousPrice = trade.p;
+      this.previousPrice = trade.price;
       this.stock = trade;
+      this.prices[trade.symbol] = trade.price;
       console.log("this.stock",this.stock)
     });
   }

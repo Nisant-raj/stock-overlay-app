@@ -22,7 +22,15 @@ wss.on('connection', (ws) => {
   console.log('🟢 Angular connected to backend WS');
 
   addClient(ws);
-  subscribe('BINANCE:BTCUSDT'); // change symbol dynamically later
+  // subscribe('BINANCE:BTCUSDT'); // change symbol dynamically later
+  const symbols = [
+  'BINANCE:BTCUSDT',
+  'BINANCE:ETHUSDT',
+  'BINANCE:DOGEUSDT',
+  'BINANCE:SOLUSDT'
+];
+
+  symbols.forEach(subscribe);
 
   ws.on('close', () => {
     removeClient(ws);
