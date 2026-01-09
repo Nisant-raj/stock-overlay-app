@@ -9,13 +9,22 @@
       <button (click)="closeApp()">✕</button>
     </div> -->
   </div>
-
-  <div class="stock-price" [class]="priceClass" *ngFor="let s of symbols">
-    <!-- <span>{{ stock?.s ??7 }} - ₹{{ stock?.p??8}}</span> -->
-    <span class="price-board" style="margin-bottom: 5px;">
+  <!-- <div class="search-bar">
+    <input type="text" placeholder="search here">
+  </div> -->
+<select name="cars" id="cars" class="Value-dropdown">
+  <option value="volvo" class="bg-dark text-10px">Add Coin</option>
+  <option value="volvo" class="bg-dark text-10px">BTCUSDT</option>
+  <option value="saab" class="bg-dark text-10px">ETHUSDT</option>
+  <option value="mercedes" class="bg-dark text-10px">DOGEUSDT</option>
+  <option value="audi" class="bg-dark text-10px">SOLUSDT</option>
+  <option value="audi" class="bg-dark text-10px">ETCUSDT</option>
+</select>
+  <div class="stock-price" *ngFor="let s of symbols">
+    <span class="price-board" [ngClass]="priceClassMap[s]">
       {{ s }} → {{ prices[s] }}
     </span>
-
+    <span (click)="unsubscribe()">❌</span>
   </div>
 
 

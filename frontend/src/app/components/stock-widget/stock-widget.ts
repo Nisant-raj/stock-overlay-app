@@ -24,15 +24,18 @@ export class StockWidget implements OnInit {
 
   stock: any;
   showChart = true;
-   symbols = [
-  'BINANCE:BTCUSDT',
-  'BINANCE:ETHUSDT',
-  'BINANCE:DOGEUSDT',
-  'BINANCE:SOLUSDT'
-];
+  symbols = [
+    'BINANCE:BTCUSDT',
+    'BINANCE:ETHUSDT',
+    'BINANCE:DOGEUSDT',
+    'BINANCE:SOLUSDT'
+  ];
 
   constructor(private stockService: StockService, private zone: NgZone, private cdr: ChangeDetectorRef, private socketService: StockSocket) { }
   prices: Record<string, number> = {};
+  priceClassMap: Record<string, 'up' | 'down'> = {};
+  previousPriceMap: Record<string, number> = {};
+
   ngOnInit() {
     // this.loadStock();
     // this.intervalId = setInterval(() => {
@@ -53,19 +56,25 @@ export class StockWidget implements OnInit {
     //   };
     // });
     // }
-    
+
     this.socketService.connect().subscribe((trade: any) => {
-      if (trade.price > this.previousPrice) {
-        this.priceClass = 'up';
-      } else if (trade.price < this.previousPrice) {
-        this.priceClass = 'down';
+      const symbol = trade.symbol;
+      const price = trade.price;
+
+      const prev = this.previousPriceMap[symbol];
+
+      if (prev !== undefined) {
+        if (price > prev) {
+          this.priceClassMap[symbol] = 'up';
+        } else if (price < prev) {
+          this.priceClassMap[symbol] = 'down';
+        }
       }
 
-      this.previousPrice = trade.price;
-      this.stock = trade;
-      this.prices[trade.symbol] = trade.price;
-      console.log("this.stock",this.stock)
+      this.previousPriceMap[symbol] = price;
+      this.prices[symbol] = price;
     });
+
   }
   previousPrice = 0;
   priceClass = '';
@@ -125,5 +134,9 @@ export class StockWidget implements OnInit {
 
   ngOnDestroy() {
     clearInterval(this.intervalId);
+  }
+
+  unsubscribe(){
+    
   }
 }

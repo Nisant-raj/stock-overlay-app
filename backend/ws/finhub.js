@@ -87,10 +87,23 @@ function broadcast(data) {
   });
 }
 
+function unsubscribe(symbol) {
+  if (!subscribedSymbols.has(symbol)) return;
+
+  socket.send(JSON.stringify({
+    type: 'unsubscribe',
+    symbol
+  }));
+
+  subscribedSymbols.delete(symbol);
+  console.log('Unsubscribed:', symbol);
+}
+
 
 module.exports = {
   startFinnhubStream,
   subscribe,
   addClient,
-  removeClient
+  removeClient,
+  unsubscribe
 };

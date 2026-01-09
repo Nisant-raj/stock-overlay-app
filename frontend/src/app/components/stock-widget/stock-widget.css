@@ -5,6 +5,7 @@
   border-radius: 10px;
   font-family: Arial;
   padding: 10px;
+  /* overflow: hidden; */
 }
 
 .drag-bar {
@@ -39,11 +40,11 @@
   -webkit-app-region: no-drag;
 }
 
-.stock-price.up {
+.price-board.up {
   color: #00ff88;
 }
 
-.stock-price.down {
+.price-board.down {
   color: #ff4d4d;
 }
 
@@ -53,10 +54,28 @@
   background: #e6d9d912;
   border-radius: 6px;
   margin-bottom:7px;
+  display: flex;
+  justify-content: space-between;
+}
+.Value-dropdown{
+  width: 100%;
+  background: #e6d9d912;
+   border-radius: 6px;
+   margin-bottom:7px;
+   padding: 4px 9px;
+   color: white;
+   border: none;
+}
+.bg-dark{
+  background-color: black;
 }
 
-span {
+span ,.text-10px,select{
   font-size: 10px;
   font-family: cursive;
   letter-spacing: 1px;
+}
+option{
+  display: flex;
+  justify-content: space-between;
 }
