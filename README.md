@@ -1,3 +1,46 @@
+# 📈 Real-Time Stock Overlay Widget
+
+A desktop always-on-top widget that displays live stock and crypto prices using Angular, Node.js, WebSockets, and Electron.
+
+---
+
+## 🚀 Features
+- Always-on-top desktop widget
+- Real-time WebSocket price streaming
+- Multi-symbol support (Crypto, US Stocks)
+- Secure backend gateway
+- Draggable UI
+- Minimize & close controls
+- Market-aware updates
+- Manual Angular change detection for high-frequency updates
+
+---
+
+## 🧱 Architecture
+
+Angular UI (Renderer)
+        ↓
+Node.js WebSocket Server
+        ↓
+Finnhub WebSocket API
+        ↓
+Electron Desktop Wrapper
+
+---
+
+## 🛠 Tech Stack
+
+- Angular (Standalone Components)
+- Node.js
+- Electron
+- WebSocket (ws)
+- Finnhub API
+- ChangeDetectorRef
+
+---
+
+## 📦 Project Structure
+
 
 Screenshort of the stock tracker overlay app 
 <img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/16bc1696-558f-443f-91dd-2e56d163a1bf" />
