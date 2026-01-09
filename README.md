@@ -41,6 +41,33 @@ Electron Desktop Wrapper
 
 ## 📦 Project Structure
 
+stock-overlay-app/
+│
+├── frontend/ # Angular app
+├── backend/ # Node.js WebSocket server
+├── electron/ # Electron main process
+├── package.json # Root scripts
+└── README.md
+
+
+---
+
+## ▶️ Running the App
+
+### 1️⃣ Install dependencies
+npm install
+cd frontend && npm install
+cd ../backend && npm install
+cd ../electron && npm install
+
+## start the project
+ --individual start 
+        npm run backend
+        npm run frontend
+        npm run electron
+-- all in one start (on route level folder )
+        npm start 
+
 
 Screenshort of the stock tracker overlay app 
 <img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/16bc1696-558f-443f-91dd-2e56d163a1bf" />
